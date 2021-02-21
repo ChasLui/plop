@@ -1,6 +1,8 @@
 plop.load
 =========
 
+English / [简体中文](./plop-load.zh-CN.md)
+
 `plop.load` can be used to load generators, actionTypes, helpers, and partials from a other plopfiles that are in your project or on NPM (`plop-pack`). Example code below.
 
 ### plop.load([targets](#targets), [[config](#config)], [[include](#include)])

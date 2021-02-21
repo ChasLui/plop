@@ -1,6 +1,8 @@
 Plop
 ======
 
+English / [简体中文](./README.zh-CN.md)
+
 Micro-generator framework that makes it easy for an entire team to create files with a level of uniformity.
 ![plop demo](https://i.imgur.com/penUFkr.gif)
 

@@ -1,10 +1,10 @@
-# Custom Inquirer Prompts
+# 自定义 Inquirer 提示
 
-English / [简体中文](./inquirer-prompts.zh-CN.md)
+简体中文 / [English](./inquirer-prompts.md)
 
-- [inquirer-directory](#inquirer-directory-nicksrandall) - A directory (relative to given path) selector for Inquirer.js
-- [inquirer-recursive](#inquirer-recursive-nathanloisel) - Recursive prompt for inquirer
-- [inquirer-select-line](#inquirer-select-line-adam-golab) - Prompt for selecting index in array where add new element
+- [inquirer-directory](#inquirer-directory-nicksrandall) - Inquirer.js 的目录选择器（相对于给定路径）
+- [inquirer-recursive](#inquirer-recursive-nathanloisel) - Inquirer 递归提示
+- [inquirer-select-line](#inquirer-select-line-adam-golab) - 提示选择数组中添加新元素的索引
 
 ---
 

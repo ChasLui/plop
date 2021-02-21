@@ -1,6 +1,8 @@
 Plop
 ======
 
+简体中文 / [English](./README.md)
+
 微型生成器框架，使整个团队能够轻松地创建具有一致性的文件。
 ![plop demo](https://i.imgur.com/penUFkr.gif)
 
