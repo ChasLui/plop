@@ -107,7 +107,7 @@ Plop使用[inquirer.js](https://github.com/SBoudrias/Inquirer.js)库来收集用
 }
 ```
 
-### 绕过提示
+### 旁路提示
 
 一旦您很好地了解了一个项目(及其生成器)，您可能希望在运行生成器时为提示提供答案。
 例如，如果我有一个有一个提示符(名称)的 `component` 生成器，我可以使用 `plop component "some component name"` 运行该生成器，
@@ -126,14 +126,14 @@ Plop使用[inquirer.js](https://github.com/SBoudrias/Inquirer.js)库来收集用
 
 Plop 为标准的 inquirer 提示提供了内置的旁路逻辑，但是也有一些方法可以提供自定义的逻辑来处理特定提示的用户输入。
 
-如果您已经发布了第3方查询者提示插件，并且想为即装即用用户提供旁路功能，[则本文档的另一部分将](#3rd-party-prompt-bypass)对此进行介绍。
+如果您已经发布了第3方查询者提示插件，并且想为即装即用用户提供旁路功能，[则本文档的另一部分将](#第三方提示旁路)对此进行介绍。
 
-### 绕过提示(按名称)
-还可以通过使用 `--` 名称绕过提示，然后为希望绕过的每个提示提供参数。[下面](#bypass-examples)的例子。
+### 旁路提示(按名称)
+还可以通过使用 `--` 名称旁路提示，然后为希望旁路的每个提示提供参数。[下面](#bypass-examples)的例子。
 
-#### 绕过示例
+#### 旁路示例
 ```
-## 绕过提示符 1 和 2
+## 旁路提示符 1 和 2
 $ plop component "my component" react
 $ plop component -- --name "my component" --type react
 
@@ -143,7 +143,7 @@ $ plop component -- --type react
 ```
 
 ### 强制运行生成器
-默认情况下，Plop动作可以让你的文件安全，当事情看起来可疑时失败。
+默认情况下，Plop操作可以让你的文件安全，当事情看起来可疑时失败。
 最明显的例子是不允许[`add`](#add)操作覆盖已经存在的文件。
 Plop操作单独支持 `force` 属性，但你也可以在终端运行 Plop 时使用 `--force` 标志。
 使用 `--force` 标志将告诉每个行动都必须强力执行。有大能力……🕷
@@ -191,7 +191,7 @@ module.exports = function (
 [**setGenerator**](#setgenerator) | *String, [GeneratorConfig](#interface-generatorconfig)* | *[GeneratorConfig](#interface-generatorconfig)* | 设置一个生成器
 [**setHelper**](#sethelper) | *String, Function* | | 设置一个 handlebars 助手
 [**setPartial**](#setpartial) | *String, String* | | 设置一个 handlebars 部分
-[**setActionType**](#setactiontype) | *String, [CustomAction](#functionsignature-custom-action)* | | 注册一个自定义操作类型
+[**setActionType**](#setactiontype) | *String, [CustomAction](#functionsignature-自定义操作)* | | 注册一个自定义操作类型
 [**setPrompt**](#setprompt) | *String, InquirerPrompt* | | registers a custom prompt type with inquirer
 [**load**](https://github.com/amwmedia/plop/blob/master/plop-load.md) | *Array[String], Object, Object* | | loads generators, helpers and/or partials from another plopfile or npm module
 
@@ -211,7 +211,7 @@ module.exports = function (plop) {
 ```
 
 ## setPartial
-`setPartial` 直接对应于 handlebars 方法`registerPartial`。 因此，如果您熟悉[handlebars partials](https://handlebarsjs.com/guide/partials.html)，那么您已经知道它是如何工作的。
+`setPartial` 直接对应于 handlebars 方法 `registerPartial`。 因此，如果您熟悉[handlebars partials](https://handlebarsjs.com/guide/partials.html)，那么您已经知道它是如何工作的。
 
 ``` javascript
 module.exports = function (plop) {
@@ -221,7 +221,7 @@ module.exports = function (plop) {
 ```
 
 ## setActionType
-`setActionType` 允许你创建自己的动作(类似于`add`或`modify`)，可以在你的 plopfiles 中使用。它们基本上是高度可重用的[自定义动作函数](#custom-action-function-)。
+`setActionType` 允许你创建自己的操作(类似于`add`或`modify`)，可以在你的 plopfiles 中使用。它们基本上是高度可重用的[自定义操作函数](#custom-action-function-)。
 
 ### *FunctionSignature* 自定义操作
 参数 | 类型 | 说明
@@ -242,7 +242,7 @@ module.exports = function (plop) {
 		return '成功状态消息';
 	});
 
-	// 或在动作中执行异步操作
+	// 或在操作中执行异步操作
 	plop.setActionType('doTheAsyncThing', function (answers, config, plop) {
 		// 做点什么
 		return new Promise((resolve, reject) => {
@@ -288,9 +288,9 @@ module.exports = function (plop) {
 ```
 
 ## setGenerator
-配置对象需要包含 `prompts` 和`actions` （`description` 是可选的）。
-提示数组将传递给[inquirer](https://github.com/SBoudrias/Inquirer.js/#objects)。
-`actions`数组是要执行的操作的列表（下面将详细介绍）
+配置对象需要包含 `prompts` 和 `actions` （`description` 是可选的）。
+提示数组将传递给 [inquirer](https://github.com/SBoudrias/Inquirer.js/#objects)。
+`actions` 数组是要执行的操作的列表（下面将详细介绍）
 
 ### *Interface* `GeneratorConfig`
 属性 | 类型 | 默认值 | 说明
@@ -299,126 +299,132 @@ module.exports = function (plop) {
 **prompts** | *Array[[InquirerQuestion](https://github.com/SBoudrias/Inquirer.js/#question)]* | | 向用户询问的问题
 **actions** | *Array[[ActionConfig](#interface-actionconfig)]* | | 要执行的操作
 
-> 如果您的操作列表需要动态显示，请查看[使用动态动作数组](#使用动态动作数组)。
+> 如果您的操作列表需要动态显示，请查看[使用动态操作数组](#使用动态操作数组)。
 
 ### *Interface* `ActionConfig`
-The following properties are the standard properties that plop handles internally. Other properties will be required depending on the *type* of action. Also take a look at the [built-in actions](#built-in-actions).
+下面的属性是plop内部处理的标准属性。根据操作的*类型*，还需要其他属性。再看一下[内置操作](#内置操作)。
 
 属性 | 类型 | 默认值 | 说明
 -------- | ---- | ------- | -----------
-**type** | *String* | | the type of action ([`add`](#add), [`modify`](#modify), [`addMany`](#addmany), [etc](#setactiontype))
-**force** | *Boolean* | `false` | performs the action [forcefully](#running-a-generator-forcefully) (means different things depending on the action)
-**data** | *Object / Function* | `{}` | specifies data that should be mixed with user prompt answers when running this action
-**abortOnFail** | *Boolean* | `true` | if this action fails for any reason abort all future actions
-**skip** | *Function* | | an optional function that specifies if the action should run
+**type** | *String* | | 操作类型 ([`add`](#add), [`modify`](#modify), [`addMany`](#addmany), [etc](#setactiontype))
+**force** | *Boolean* | `false` | [强制执行操作](#强制运行生成器)（根据操作表示不同的意思）
+**data** | *Object / Function* | `{}` | 指定在运行此操作时应与用户提示答案混合的数据
+**abortOnFail** | *Boolean* | `true` | 如果此操作由于任何原因失败，则中止所有将来的操作
+**skip** | *Function* | | 一个可选的函数，指定操作是否应该运行
 
-> The `data` property on any `ActionConfig` can also be a `Function` that returns an `Object` or a `Function` that returns a `Promise` that resolves with an `Object`.
+> 任何 `ActionConfig` 上的 `data` 属性也可以是一个返回 `Object` 的 `Function` ，
+> 或者一个返回 `Promise` 的 `Function` ，它可以用 `Object`来解析。
 
-> The `skip` function on any `ActionConfig` is optional and should return a string if the action should be skipped. The return value is the reason to skip the action.
+> 任何 `ActionConfig` 上的 `skip` 函数都是可选的，如果该操作应该被跳过，
+> 则应该返回一个字符串。返回值是跳过该操作的原因。
 
-> Instead of an Action Object, a [function can also be used](#custom-action-function-)
+> 除了 Action 对象，[还可以使用函数](#自定义-操作函数-)
 
 ## 其他方法
 方法 | 参数 | 返回值 | 说明
 ------ | ---------- | ------- | -----------
-**getHelper** | *String* | *Function* | get the helper function
-**getHelperList** | | *Array[String]* | get a list of helper names
-**getPartial** | *String* | *String* | get a handlebars partial by name
-**getPartialList** | | *Array[String]* | get a list of partial names
-**getActionType** | *String* | *[CustomAction](#functionsignature-custom-action)* | get an actionType by name
-**getActionTypeList** | | *Array[String]* | get a list of actionType names
-**setWelcomeMessage** | *String* | | Customizes the displayed message that asks you to choose a generator when you run `plop`.
-**getGenerator** | *String* | *[GeneratorConfig](#interface-generatorconfig)* | get the [GeneratorConfig](#interface-generatorconfig) by name
-**getGeneratorList** | | *Array[Object]* | gets an array of generator names and descriptions
-**setPlopfilePath** | *String* | | set the `plopfilePath` value which is used internally to locate resources like template files
-**getPlopfilePath** | | *String* | returns the absolute path to the plopfile in use
-**getDestBasePath** | | *String* | returns the base path that is used when creating files
-**setDefaultInclude** | *Object* | *Object* | sets the default config that will be used for this plopfile if it is consumed by another plopfile using `plop.load()`
-**getDefaultInclude** | *String* | *Object* | gets the default config that will be used for this plopfile if it is consumed by another plopfile using `plop.load()`
-**renderString** | *String, Object* | *String* | Runs the first parameter (*String*) through the handlebars template renderer using the second parameter (*Object*) as the data. Returns the rendered template.
+**getHelper** | *String* | *Function* | 获取一个助手函数
+**getHelperList** | | *Array[String]* | 获取一个助手名称列表
+**getPartial** | *String* | *String* | 按名字取 handlebars 局部
+**getPartialList** | | *Array[String]* | 获取一个局部列表
+**getActionType** | *String* | *[CustomAction](#functionsignature-自定义操作)* | 通过名称获取一个 actionType
+**getActionTypeList** | | *Array[String]* | 获取 actionType 名称列表
+**setWelcomeMessage** | *String* | | 自定义在运行 `plop` 时要求您选择生成器的显示消息。
+**getGenerator** | *String* | *[GeneratorConfig](#interface-generatorconfig)* | 通过名称获取 [GeneratorConfig](#interface-generatorconfig)
+**getGeneratorList** | | *Array[Object]* | 获取生成器名称和描述的数组
+**setPlopfilePath** | *String* | | 设置 `plopfilePath` 值，该值在内部用于定位模板文件等资源
+**getPlopfilePath** | | *String* | 返回正在使用的 plopfile 的绝对路径
+**getDestBasePath** | | *String* | 返回创建文件时使用的基本路径
+**setDefaultInclude** | *Object* | *Object* | 设置默认配置，如果这个 plopfile 被另一个 plopfile 使用，使用 `plop.load()`
+**getDefaultInclude** | *String* | *Object* | 获取默认配置，如果该配置文件被另一个 plopfile 使用 `plop.load()` 使用，它将用于该plopfile。
+**renderString** | *String, Object* | *String* | 使用第二个参数（*Object*）作为数据，通过 handlebars 模板渲染器运行第一个参数（*String*）。 返回渲染的模板。
 
-# Built-In Actions
-There are several types of built-in actions you can use in your [GeneratorConfig](#interface-generatorconfig). You specify which `type` of action  (all paths are based on the location of the plopfile), and a template to use.
+# 内置操作
+你可以在你的[GeneratorConfig](#interface-generatorconfig)中使用几种类型的内置操作。
+你可以指定操作的 `type` (所有路径都基于 plopfile 的位置)和要使用的模板。
 
-> The `Add`, `AddMany` and `Modify` actions have an optional `transform` method that can be used to transform the template result before it is written to disk. The `transform` function receives the template result or file contents as a `string` and the action data as arguments. It must return a `string` or a `Promise` that resolves to a `string`.
-
+> `Add`， `AddMany` 和 `Modify` 操作有一个可选的 `transform` 方法，可用于在模板结果被写入磁盘之前转换它。
+> `transform` 函数以 `string`形式接收模板结果或文件内容，操作数据作为参数。
+> 它必须返回一个 `string` 或一个 `Promise` 来解析为 `string`。
 ## Add
-The `add` action is used to (you guessed it) add a file to your project. The path property is a handlebars template that will be used to create the file by name. The file contents will be determined by the `template` or `templateFile` property.
+ `add` 操作用于(你猜到了)将文件添加到项目中。path 属性是一个 handlebars 模板，用于按名称创建文件。文件内容将由 `template` 或 `templateFile` 属性决定。
 
-Property | Type | Default | Description
+属性 | 类型 | 默认值 | 说明
 -------- | ---- | ------- | -----------
-**path** | *String* | | a handlebars template that (when rendered) is the path of the new file
-**template** | *String* | | a handlebars template that should be used to build the new file
-**templateFile** | *String* | | a path a file containing the `template`
-**skipIfExists** | *Boolean* | `false` | skips a file if it already exists (instead of failing)
-**transform** | *Function* | | [an optional function](#built-in-actions) that can be used to transform the template result before writing the file to disk
-**skip** | *Function* | | *inherited from [ActionConfig](#interface-actionconfig)*
-**force** | *Boolean* | `false` | *inherited from [ActionConfig](#interface-actionconfig)* (overwrites files if they exist)
-**data** | *Object* | `{}` | *inherited from [ActionConfig](#interface-actionconfig)*
-**abortOnFail** | *Boolean* | `true` | *inherited from [ActionConfig](#interface-actionconfig)*
+**path** | *String* | | 一个 handlebars 模板（渲染时）是新文件的路径
+**template** | *String* | | 应该用于构建新文件的 handlebars 模板
+**templateFile** | *String* | | 包含 `template` 的文件的路径
+**skipIfExists** | *Boolean* | `false` | 如果文件已经存在，则跳过它(而不是失败)
+**transform** | *Function* | | [可选功能](#内置操作) ，可用于在将文件写入磁盘之前转换模板结果
+**skip** | *Function* | | *继承自 [ActionConfig](#interface-actionconfig)*
+**force** | *Boolean* | `false` | *继承自 [ActionConfig](#interface-actionconfig)* (如果文件存在，则覆盖文件)
+**data** | *Object* | `{}` | *继承自 [ActionConfig](#interface-actionconfig)*
+**abortOnFail** | *Boolean* | `true` | *继承自 [ActionConfig](#interface-actionconfig)*
 
 ## AddMany
-The `addMany` action can be used to add multiple files to your project with a single action. The `destination` property is a handlebars template that will be used to identify the folder that the generated files should go into. The `base` property  can be used to alter what section of the template paths should be omitted when creating files. The paths located by the `templateFiles` glob can use handlebars syntax in their file/folder names if you'd like the added file names to be unique (example: `{{ dashCase name }}.spec.js`).
+`addMany` 操作可用于通过一个操作将多个文件添加到项目中。  `destination` 属性是一个 handlebars 模板，将用于标识生成的文件应放入的文件夹。  `base` 属性可用于更改在创建文件时应忽略模板路径的哪一部分。 如果您希望添加的文件名是唯一的，那么 `templateFiles` 全局文件所位于的路径可以在它们的文件/文件夹名称中使用 handlebars 语法（例如：`{{ dashCase name }}.spec.js`）。
 
-Property | Type | Default | Description
+属性 | 类型 | 默认值 | 说明
 -------- | ---- | ------- | -----------
-**destination** | *String* | | a handlebars template that (when rendered) is the destination folder for the new files
-**base** | *String* | | the section of the path that should be excluded when adding files to the `destination` folder
-**templateFiles** | *[Glob](https://github.com/sindresorhus/globby#globbing-patterns)* | | glob pattern that matches multiple template files to be added
-**stripExtensions** | *[String]* | `['hbs']` | file extensions that should be stripped from `templateFiles` files names while being added to the `destination`
-**globOptions** | *[Object](https://github.com/sindresorhus/globby#options)* | | glob options that change how to match to the template files to be added
-**verbose** | *Boolean* | `true` | print each successfully added file path
-**transform** | *Function* | | [an optional function](#built-in-actions) that can be used to transform the template result before writing each file to disk
-**skip** | *Function* | | *inherited from [ActionConfig](#interface-actionconfig)*
-**skipIfExists** | *Boolean* | `false` | *inherited from [Add](#add)* (skips a file if it already exists)
-**force** | *Boolean* | `false` | *inherited from [ActionConfig](#interface-actionconfig)* (overwrites files if they exist)
-**data** | *Object* | `{}` | *inherited from [ActionConfig](#interface-actionconfig)*
-**abortOnFail** | *Boolean* | `true` | *inherited from [ActionConfig](#interface-actionconfig)*
+**destination** | *String* | | handlebars模板(在渲染时)是新文件的目标文件夹
+**base** | *String* | | 向 `destination` 文件夹添加文件时应排除的路径部分
+**templateFiles** | *[Glob](https://github.com/sindresorhus/globby#globbing-patterns)* | | 与要添加的多个模板文件匹配的全局模式
+**stripExtensions** | *[String]* | `['hbs']` | 当被添加到 `destination` 时，应该从 `templateFiles` 文件名中剥离的文件扩展名
+**globOptions** | *[Object](https://github.com/sindresorhus/globby#options)* | | 全局选项，用于更改与要添加的模板文件的匹配方式
+**verbose** | *Boolean* | `true` | 打印每个成功添加的文件路径
+**transform** | *Function* | | [可选功能](#内置操作) 可以在将每个文件写入磁盘之前转换模板结果
+**skip** | *Function* | | *继承自 [ActionConfig](#interface-actionconfig)*
+**skipIfExists** | *Boolean* | `false` | *继承自 [Add](#add)* (跳过已经存在的文件)
+**force** | *Boolean* | `false` | *继承自 [ActionConfig](#interface-actionconfig)* (如果文件存在，则覆盖文件)
+**data** | *Object* | `{}` | *继承自 [ActionConfig](#interface-actionconfig)*
+**abortOnFail** | *Boolean* | `true` | *继承自 [ActionConfig](#interface-actionconfig)*
 
 ## Modify
-The `modify` action can be used two ways. You can use a `pattern` property to find/replace text in the file located at the `path` specified, or you can use a `transform` function to transform the file contents. Both `pattern` and `transform` can be used at the same time (`transform` will happen last). More details on modify can be found in the example folder.
+可以通过两种方式使用 `modify` 操作。 您可以使用 `pattern` 属性在指定的 `path` 中查找/替换文件中的文本，也可以使用 `transform` 函数来转换文件内容。  `pattern` 和 `transform` 都可以同时使用（ `transform` 将最后发生）。 可以在 example 文件夹中找到有关修改的更多详细信息。
 
-Property | Type | Default | Description
+属性 | 类型 | 默认值 | 说明
 -------- | ---- | ------- | -----------
-**path** | *String* | | handlebars template that (when rendered) is the path of the file to be modified
-**pattern** | *RegExp* | _end&#x2011;of&#x2011;file_ | regular expression used to match text that should be replaced
-**template** | *String* | | handlebars template that should replace what was matched by the `pattern`. capture groups are available as $1, $2, etc
-**templateFile** | *String* | | path a file containing the `template`
-**transform** | *Function* | | [an optional function](#built-in-actions) that can be used to transform the file before writing it to disk
-**skip** | *Function* | | *inherited from [ActionConfig](#interface-actionconfig)*
-**data** | *Object* | `{}` | *inherited from [ActionConfig](#interface-actionconfig)*
-**abortOnFail** | *Boolean* | `true` | *inherited from [ActionConfig](#interface-actionconfig)*
+**path** | *String* | | handlebars模板(在渲染时)是要修改的文件的路径
+**pattern** | *RegExp* | _end&#x2011;of&#x2011;file_ | 用于匹配应替换文本的正则表达式
+**template** | *String* | | handlebars 模板，应该取代什么是匹配的`pattern`。捕获组有 $1、$2 等
+**templateFile** | *String* | | 路径包含 `template` 的文件
+**transform** | *Function* | | [可选功能](#内置操作) 可用于在将文件写入磁盘之前转换文件
+**skip** | *Function* | | *继承自 [ActionConfig](#interface-actionconfig)*
+**data** | *Object* | `{}` | *继承自 [ActionConfig](#interface-actionconfig)*
+**abortOnFail** | *Boolean* | `true` | *继承自 [ActionConfig](#interface-actionconfig)*
 
 ## Append
-The `append` action is a commonly used subset of `modify`. It is used to append data in a file at a particular location.
+`append` 操作是 `modify` 的一个常用子集。它用于在文件的特定位置追加数据。
 
-Property | Type | Default | Description
+属性 | 类型 | 默认值 | 说明
 -------- | ---- | ------- | -----------
-**path** | *String* | | handlebars template that (when rendered) is the path of the file to be modified
-**pattern** | *RegExp, String* | | regular expression used to match text where the append should happen
-**unique** | *Boolean* | `true` | whether identical entries should be removed
-**separator** | *String* | `new line` | the value that separates entries
-**template** | *String* | | handlebars template to be used for the entry
-**templateFile** | *String* | | path a file containing the `template`
-**data** | *Object* | `{}` | *inherited from [ActionConfig](#interface-actionconfig)*
-**abortOnFail** | *Boolean* | `true` | *inherited from [ActionConfig](#interface-actionconfig)*
+**path** | *String* | | handlebars模板(在渲染时)是要修改的文件的路径
+**pattern** | *RegExp, String* | | 用于匹配应替换文本的正则表达式
+**unique** | *Boolean* | `true` | 是否删除相同的条目
+**separator** | *String* | `new line` | 分隔条目的值
+**template** | *String* | | 入口使用的 handlebars 模板
+**templateFile** | *String* | | 路径包含 `template` 的文件
+**data** | *Object* | `{}` | *继承自 [ActionConfig](#interface-actionconfig)*
+**abortOnFail** | *Boolean* | `true` | *继承自 [ActionConfig](#interface-actionconfig)*
 
-## Custom (Action Function)
-The `Add` and `Modify` actions will take care of almost every case that plop is designed to handle. However, plop does offer custom action functions for the node/js guru. A custom action function is a function that is provided in the actions array.
-- Custom action functions are executed by plop with the same [CustomAction](#functionsignature-custom-action) function signature.
-- Plop will wait for the custom action to complete before executing the next action.
-- The function must let plop known what’s happening through the return value. If you return a `Promise`, we won’t start other actions until the promise resolves. If you return a message (*String*), we know that the action is done and we’ll report the message in the status of the action.
-- A custom action fails if the promise is rejected, or the function throws an `Exception`
+## 自定义 (操作函数)
+`Add` 和 `Modify` 操作几乎可以处理plop旨在处理的每种情况。 但是，plop 确实为 node / js 专家提供了自定义操作功能。 
+自定义操作函数是在操作数组中提供的函数。
+- 自定义操作函数由 plop 以相同的 [CustomAction](#functionsignature-自定义操作) 函数签名执行。
+- Plop将等待自定义操作完成后再执行下一个操作。
+- 如果你返回一个 `Promise`，在 Promise 解析之前我们不会启动其他操作。
+如果您返回一个消息(*String*)，我们知道操作已经完成，我们将在操作的状态中报告该消息。
+- 如果 promise 被拒绝，或者函数抛出 `Exception`，则自定义操作失败
 
-_See the [example plopfile](https://github.com/amwmedia/plop/blob/master/example/plopfile.js) for a sample synchronous custom action._
+_参见 [plopfile 示例](https://github.com/amwmedia/plop/blob/master/example/plopfile.js)，了解同步自定义操作的示例。_
 
-## Comments
-Comment lines can be added to the actions array by adding a string in place of an action config object. Comments are printed to the screen when plop comes to them and have no functionality of their own.
+## 注释
+通过在 action 配置对象中添加字符串，可以将注释行添加到 actions 数组中。
+当 plop 找到注释时，注释会被打印到屏幕上，而且注释本身没有任何功能。
+# 内置 Helpers
+我发现有一些非常有用的 Helpers 可以包含在 plop 中。它们大多是大小写修饰符，但下面是完整的列表。
 
-# Built-In Helpers
-There are a few helpers that I have found useful enough to include with plop. They are mostly case modifiers, but here is the complete list.
-
-## Case Modifiers
+## 案例装饰器
 - **camelCase**: changeFormatToThis
 - **snakeCase**: change_format_to_this
 - **dashCase/kebabCase**: change-format-to-this
@@ -430,17 +436,16 @@ There are a few helpers that I have found useful enough to include with plop. Th
 - **constantCase**: CHANGE_FORMAT_TO_THIS
 - **titleCase**: Change Format To This
 
-## Other Helpers
-- **pkg**: look up a property from a package.json file in the same folder as the plopfile.
+## 其他 Helpers
+- **pkg**: 从包中查找属性 package.json 文件与 plopfile 在同一个文件夹中。
 
-# Taking it Further
+# 更进一步
+使用一些基本的生成器并不需要很多东西。然而，如果你想更进一步，请阅读 young padawan。
 
-There is not a lot needed to get up and running on some basic generators. However, if you want to take your plop-fu further, read on young padawan.
+## 使用动态操作数组
+另外，[GeneratorConfig](#interface-generatorconfig)的 `actions` 属性本身可以是一个函数，它将 answers 数据作为参数并返回 actions 数组。
 
-## Using a Dynamic Actions Array
-Alternatively, the `actions` property of the [GeneratorConfig](#interface-generatorconfig) can itself be a function that takes the answers data as a parameter and returns the actions array.
-
-This allows you to adapt the actions array based on provided answers:
+这允许你根据提供的答案(answers)调整操作数组:
 
 ``` javascript
 module.exports = function (plop) {
@@ -473,8 +478,11 @@ module.exports = function (plop) {
 };
 ```
 
-## 3rd Party Prompt Bypass
-If you have written an inquirer prompt plugin and want to support plop's bypass functionality, the process is pretty simple. The plugin object that your prompt exports should have a `bypass` function. This `bypass` function will be run by plop with the user's input as the first parameter and the prompt config object as the second parameter. The value that this function returns will be added to the answer data object for that prompt.
+## 第三方提示旁路
+如果你已经写了一个 inquirer 提示插件，并且想要支持 plop 的旁路功能，这个过程是非常简单的。
+提示导出的插件对象应该有一个 `bypass` 函数。
+这个`bypass` 函数将由 plop 运行，用户的输入作为第一个参数，提示配置对象作为第二个参数。
+该函数返回的值将添加到该提示的答案数据对象中。
 
 ``` javascript
 // My confirmation inquirer plugin
@@ -492,17 +500,18 @@ function MyConfirmPluginConstructor() {
 	return this;
 }
 ```
-> For the above example, the bypass function takes the user's text input and turns it into a `Boolean` value that will be used as the prompt answer data.
+> 对于上面的示例，旁路函数接受用户的文本输入，并将其转换为一个 `Boolean` 值，作为提示答案数据。
 
-### Adding Bypass Support to Your Plopfile
-If the 3rd party prompt plugin you are using does not support bypass by default, you can add the `bypass` function above to your prompt's config object and plop will use it for handling bypass data for that prompt.
+### 添加旁路支持到您的配置文件
+如果你使用的第三方提示插件默认不支持旁路，你可以在提示的配置对象中添加 `bypass` 函数，plop 会使用它来处理该提示的旁路数据。
 
-## Wrapping Plop
+## 包装 Plop
 
-Plop provides a lot of powerful functionality "for free". This utility is so powerful, in fact, that you can even wrap `plop`
-into your own CLI project. To do so, you only need a `plopfile.js`, a `package.json`, and a template to reference.
+Plop提供了许多“免费”的强大功能。
+这个实用程序非常强大，事实上，你甚至可以将`plop`包装到你自己的 CLI 项目中。
+为此，你只需要一个`plopfile.js`, `package.json`，以及一个要引用的模板。
 
-Your `index.js` file should look like the following:
+你的 `index.js` 文件应如下所示：
 
 ```javascript
 #!/usr/bin/env node
@@ -513,26 +522,24 @@ const argv = require('minimist')(args);
 
 Plop.launch({
   cwd: argv.cwd,
-  // In order for `plop` to always pick up the `plopfile.js` despite the CWD, you must use `__dirname`
+  // 为了使 `plop` 在 CWD 情况下始终能够拾取 `plopfile.js`，必须使用 `__dirname`
   configPath: path.join(__dirname, 'plopfile.js'),
   require: argv.require,
   completion: argv.completion
-// This will merge the `plop` argv and the generator argv.
-// This means that you don't need to use `--` anymore
+// 这将合并 `plop` argv和生成器 argv。
+// 这意味着你不需要再用 `--` 了
 }, env => run(env, undefined, true));
 ```
 
-> Be aware that if you choose to use the `env => run(env, undefined, true))`, you may run into command merging issues
-> when using generator arg passing.
+> 请注意，如果选择使用 `env => run(env, undefined, true))`，在使用生成器参数传递时可能会遇到命令合并问题。
 >
-> If you'd like to opt-out of this behavior and act like plop does (requiring `--` before passing named arguments to generators)
-> simply replace the `env =>` arrow function with `run`:
+> 如果您想选择退出此行为并像 plop 那样行事(要求 `--` 在将命名参数传递给生成器之前)，只需用 `run` 替换 `env =>` 箭头函数:
 >
 >```javascript
 >Plop.launch({}, run);
 >```
 
-And your `package.json` should look like the following:
+您的 `package.json` 文件应如下所示：
 
 ```json
 {
@@ -551,37 +558,36 @@ And your `package.json` should look like the following:
   }
 }
 ```
+### 设置包装器的基本目标路径
 
-### Setting the base destination path for the wrapper
-
-When wrapping plop, you might want to have the destination path to be based on the cwd when running the wrapper. You can configure the `dest` base path like this:
+在包装 plop 时，您可能希望基于运行包装器时的 cwd 来实现目标路径。你可以像这样配置 `dest` 基路径：
 
 ```javascript
 Plop.launch({
-	// config like above
+	// 像上面的配置
 }, env => {
 	const options = {
 		...env,
-		dest: process.cwd() // this will make the destination path to be based on the cwd when calling the wrapper
+		dest: process.cwd() // 这将使目标路径在调用包装器时基于 cwd
 	}
 	return run(options, undefined, true)
 })
 ```
 
-### Adding General CLI Actions
+### 添加常规 CLI 操作
 
-Many CLI utilities handle some actions for you, such as running `git init` or `npm install` once the template is generated.
+许多 CLI 实用程序都会为您处理一些操作，例如在生成模板后运行`git init`或 `npm install` 。
 
-While we'd like to provide these actions, we also want to keep the core actions limited in scope. As such, we maintain a collection of libraries built to add these actions to Plop in [our Awesome Plop list](https://github.com/plopjs/awesome-plop). There, you'll be able to find options for those actions, or even build your own and add it to the list!
+尽管我们希望提供这些操作，但我们也希望将核心操作限制在范围内。 
+因此，我们维护了一个库集合，这些库旨在将这些操作添加到[Awesome Plop列表](https://github.com/plopjs/awesome-plop)中的 Plop 中。
+在这里，您将能够找到这些操作的选项，甚至可以构建自己的操作并将其添加到列表中！
+### 进一步自定义
 
-### Further Customization
+虽然 `plop` 为 CLI 实用程序包装器提供了一个很棒的定制级别，但在有些情况下，你可能只是想要更多地控制 CLI 体验，同时也利用模板生成代码。
 
-While `plop` provides a great level of customization for CLI utility wrappers, there may be usecases where you simply
-want more control over the CLI experience while also utilizing the template generation code.
+幸运的是，[`node-plop`](https://github.com/plopjs/node-plop/) 可能适合你! `plop` CLI本身就是基于它构建的，并且可以很容易地扩展到 CLI 中的其他用途。
+但是，需要注意的是，对于与`node-plop`的集成，文档并没有那么充实。
+那就是说它们是恶龙。
 
-Luckily, [`node-plop`](https://github.com/plopjs/node-plop/) may be for you! It's what the `plop` CLI itself is built
-upon and can be easily extended for other usage in the CLI. However, be warned, documentation is not quite as fleshed out
-for integration with `node-plop`. That is to say `Thar be dragons`.
-
-> We note lackluster documentation on `node-plop` integration not as a point of pride, but rather a word of warning.
-> If you'd like to contribute documentation to the project, please do so! We always welcome and encourage contributions!
+> 我们注意到，关于 `node-plop` 集成的文档很乏味，不是出于自豪，而是警告。
+> 如果您想为该项目提供文档，请这样做！ 我们始终欢迎并鼓励您的贡献！
